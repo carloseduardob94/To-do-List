@@ -1,10 +1,9 @@
-import { Container } from './styles'
 import { Task } from '../Task'
 
-export const Tasks = ({ tasks, handleTaskClick }) => {
+export const Tasks = ({ tasks, handleTaskClick, handleTaskDelete }) => {
   return (
-    <Container>
-      {tasks.map(task => (<Task task={task} handleTaskClick={handleTaskClick}/>))}
-    </Container>
+    <>
+      {tasks.map(task => (<Task task={task} handleTaskClick={handleTaskClick} handleTaskDelete={handleTaskDelete}/>))}
+    </>
   )
 }

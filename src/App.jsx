@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid'
+
 import { Container } from './styles/App.style'
 import { Tasks } from './components/Tasks'
 import { AddTask } from './components/AddTask'
-import { v4 as uuid } from 'uuid'
+import { Header } from './components/Header'
 
 const App = () => {
   // let message = 'Hello world!'
@@ -21,7 +23,7 @@ const App = () => {
 
   const handleTaskClick = (taskId) => {
     const newTasks = tasks.map(task =>{
-      if(task.id === taskId) return {...task, completed: !task.completed}
+      if(task.id === taskId) return {...task, completed : !task.completed}
 
       return task
 
@@ -38,10 +40,20 @@ const App = () => {
 
     setTasks(newTask)
   }
+
+  const handleTaskDelete = (taskId) => {
+    const newTasks = tasks.filter(task => task.id !== taskId)
+    setTasks(newTasks)
+  }
+
   return(
       <Container>
+        <Header />
         <AddTask handleTaskAddition={handleTaskAddition}/>
-        <Tasks tasks={tasks} handleTaskClick={handleTaskClick}/>
+        <Tasks tasks={tasks} 
+        handleTaskClick={handleTaskClick}
+        handleTaskDelete={handleTaskDelete}
+        />
       </Container>
   )
 }
