@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 import { Container } from './styles/App.style'
 import { Tasks } from './components/Tasks'
 import { AddTask } from './components/AddTask'
 import { Header } from './components/Header'
+import { TaskDetails } from './components/TaskDetails'
 
 const App = () => {
-  // let message = 'Hello world!'
   const [tasks, setTasks] = useState([
     {
       id: '1',
@@ -47,14 +48,22 @@ const App = () => {
   }
 
   return(
-      <Container>
-        <Header />
-        <AddTask handleTaskAddition={handleTaskAddition}/>
-        <Tasks tasks={tasks} 
-        handleTaskClick={handleTaskClick}
-        handleTaskDelete={handleTaskDelete}
-        />
-      </Container>
+    <BrowserRouter>
+        <Container>
+          <Header />
+          <Route path="/" exact render={() => (
+            <>
+              <AddTask handleTaskAddition={handleTaskAddition}/>
+              <Tasks tasks={tasks} 
+              handleTaskClick={handleTaskClick}
+              handleTaskDelete={handleTaskDelete}
+              />
+            </>
+            )}
+          />
+          <Route path="/:taskTitle"  exact component={TaskDetails} />
+        </Container>
+    </BrowserRouter>
   )
 }
 
