@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container } from './styles/App.style'
 import { Tasks } from './components/Tasks'
 import { AddTask } from './components/AddTask'
-
+import { v4 as uuid } from 'uuid'
 
 const App = () => {
   // let message = 'Hello world!'
@@ -18,10 +18,30 @@ const App = () => {
       completed: true
     }
   ])
+
+  const handleTaskClick = (taskId) => {
+    const newTasks = tasks.map(task =>{
+      if(task.id === taskId) return {...task, completed: !task.completed}
+
+      return task
+
+    })
+    setTasks(newTasks)
+  }
+
+  const handleTaskAddition = (taskTitle) => {
+    const newTask = [...tasks, {
+      title: taskTitle,
+      id: uuid(),
+      completed: false
+    }]
+
+    setTasks(newTask)
+  }
   return(
       <Container>
-        <AddTask />
-        <Tasks tasks={tasks} />
+        <AddTask handleTaskAddition={handleTaskAddition}/>
+        <Tasks tasks={tasks} handleTaskClick={handleTaskClick}/>
       </Container>
   )
 }

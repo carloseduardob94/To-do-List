@@ -10,4 +10,8 @@ export const Container = styled.div`
   align-items: center;
 
   cursor: pointer;
+
+  > div {
+    background: none;
+  }
 `
